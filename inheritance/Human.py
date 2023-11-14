@@ -14,23 +14,44 @@ class Archer(Human):
     def get_num_arrows(self):
         return self.__num_arrows
 
+    def use_arrows(self, num):
+        self.num = num
+        if (self.__num_arrows < self.num):
+            raise Exception("not enough arrows")
+        else:
+            self.__num_arrows -= self.num
+
+
+class Crossbowman(Archer):
+    def __init__(self, name, num_arrows):
+        super().__init__(name,num_arrows)
+
+    def triple_shot(self, target):
+        
+        self.use_arrows(3)
+        print("{} was shot by 3 crossbow bolts".format(target))
+
 
 # don't touch below this line
 
 
 def main():
     try:
-        print("creating a human named Faramir")
-        human = Human("Faramir")
-        identify(human)
-    except Exception as e:
-        print(e)
-
-    try:
         print("creating an archer named Bard")
-        human = Archer("Bard", 1)
-        identify(human)
-        print(f"Bard has {human.get_num_arrows()} arrows")
+        human2 = Archer("Bard", 1)
+        identify(human2)
+        print(f"Bard has {human2.get_num_arrows()} arrows")
+
+        print("creating a crossbowman named Sir Not-Appearing-In-This-Film")
+        human3 = Crossbowman("Sir Not-Appearing-In-This-Film", 4)
+        identify(human3)
+        print(f"{human3.get_name()} has {human3.get_num_arrows()} arrows")
+        print(f"{human3.get_name()} attempts to shoot {human2.get_name()}")
+        human3.triple_shot(human2)
+        print(f"{human3.get_name()} has {human3.get_num_arrows()} arrows")
+        print(f"{human3.get_name()} attempts to shoot {human2.get_name()}")
+        human3.triple_shot(human2)
+
     except Exception as e:
         print(e)
 
